@@ -1,26 +1,174 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <title>我的客服</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>联系客服</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        p {
+            text-align: center;
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+        /* 模拟聊天窗口的样式 */
+        .chat-box {
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            height: 350px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            background: #f9f9f9;
+        }
+        .chat-header {
+            background: #007bff;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .chat-messages {
+            flex-grow: 1;
+            padding: 15px;
+            overflow-y: auto;
+            font-size: 15px;
+        }
+        .message {
+            margin-bottom: 12px;
+            padding: 10px 14px;
+            border-radius: 18px;
+            max-width: 80%;
+        }
+        .received {
+            background: #e9ecef;
+            color: #333;
+            border-bottom-left-radius: 4px;
+            align-self: flex-start;
+        }
+        .sent {
+            background: #007bff;
+            color: white;
+            border-bottom-right-radius: 4px;
+            margin-left: auto; /* 靠右对齐 */
+        }
+        .chat-input-area {
+            display: flex;
+            border-top: 1px solid #ddd;
+            padding: 10px;
+            background: #fff;
+        }
+        .chat-input-area input {
+            flex-grow: 1;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            font-size: 15px;
+            outline: none;
+        }
+        .chat-input-area button {
+            margin-left: 10px;
+            padding: 12px 20px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+        }
+        /* 底部提示 */
+        .footer-note {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 13px;
+            color: #999;
+        }
+    </style>
 </head>
 <body>
 
-  <h1>欢迎咨询</h1>
-  <p>请点击右下角聊天</p>
+    <div class="container">
+        <h1>在线客服</h1>
+        <p>您好，请问有什么可以帮您？</p>
 
-  <!-- 这里是 Crisp 客服代码 -->
-  <script type="text/javascript">
-    window.$crisp=[];
-    window.CRISP_WEBSITE_ID="740b947d-9cd5-46aa-8d89-41dc6f5359d8";
-    (function(){
-      d=document;
-      s=d.createElement("script");
-      s.src="https://client.crisp.chat/l.js";
-      s.async=1;
-      d.getElementsByTagName("head")[0].appendChild(s);
-    })();
-  </script>
+        <div class="chat-box">
+            <div class="chat-header">
+                正在为您服务
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <!-- 模拟收到的消息 -->
+                <div class="message received">
+                    您好！欢迎咨询，请描述您的问题。
+                </div>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="messageInput" placeholder="请输入您的问题..." onkeypress="handleKeyPress(event)">
+                <button onclick="sendMessage()">发送</button>
+            </div>
+        </div>
+
+        <p class="footer-note">客服工作时间：9:00 - 18:00</p>
+    </div>
+
+    <script>
+        function sendMessage() {
+            var input = document.getElementById('messageInput');
+            var messagesContainer = document.getElementById('chatMessages');
+            var messageText = input.value.trim();
+
+            if (messageText !== "") {
+                // 创建“我发送的消息”
+                var sentMessageDiv = document.createElement('div');
+                sentMessageDiv.className = 'message sent';
+                sentMessageDiv.textContent = messageText;
+                messagesContainer.appendChild(sentMessageDiv);
+
+                // 清空输入框
+                input.value = '';
+
+                // 滚动到底部
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+                // 模拟客服回复（后续这里可以接入真正的客服系统）
+                setTimeout(function() {
+                    var receivedMessageDiv = document.createElement('div');
+                    receivedMessageDiv.className = 'message received';
+                    receivedMessageDiv.textContent = '收到您的消息，我们会尽快回复您。';
+                    messagesContainer.appendChild(receivedMessageDiv);
+                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                }, 1000);
+            }
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+    </script>
 
 </body>
 </html>
